@@ -30,8 +30,8 @@ def get_flattened_imgs(img_size=299, env='pc'):
       # store an np array of all the flattened images in the class
       for i, img in enumerate(os.listdir(class_path)):
           img_path = os.path.join(class_path, img)
-          img = cv2.imread(img_path, 0)
-          img = img.flatten()[:100]
+          img = cv2.imread(img_path)
+          img = img.flatten()
           class_images[class_i][i] = img
           print(f"Flattened image {i} in class {class_i}")
           
