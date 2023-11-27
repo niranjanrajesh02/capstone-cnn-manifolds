@@ -8,10 +8,16 @@ parser = argparse.ArgumentParser()
 parser.add_argument('--video', type=str, default='mug',
                     help='video file name')  # sunglass or mug
 parser.add_argument('--size', type=str, default=299, help='size of frame')
+parser.add_argument('--env', type=str, default='pc', help='environment')
 args = parser.parse_args()
 
-video_path = './videos/' + args.video + '/'
-save_path = './frames/' + args.video + '/'
+if args.env == 'pc':
+    video_path = './videos/' + args.video + '/'
+    save_path = './frames/' + args.video + '/'
+elif args.env == 'hpc':
+    video_path = '/home/niranjan.rajesh_asp24/capstone-cnn-manifolds/vid2img/videos/' + args.video + '/'
+    save_path = '/home/niranjan.rajesh_asp24/capstone-cnn-manifolds/vid2img/frames/' + args.video + '/'
+
 
 
 if os.path.exists(save_path):
