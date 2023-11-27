@@ -23,11 +23,11 @@ def classify_pixel_space():
   X, Y = load_data_from_dict(class_imgs)
   del class_imgs
   # Train linear model
-  X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.01, random_state=42)
+  X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.2, random_state=42)
   model = LogisticRegression()
   model.fit(X_train, Y_train)
-  Y_pred = model.predict(X_train)
-  print(f"Accuracy: {accuracy_score(Y_train, Y_pred)}")
+  Y_pred = model.predict(X_test)
+  print(f"Accuracy: {accuracy_score(Y_test, Y_pred)}")
 
 
   # create a dataframe of the classes
