@@ -1,12 +1,11 @@
 import cv2
 import argparse
 import os
-from data_utils import center_crop, central_resize
+from data_utils import central_resize
 import shutil
 
 parser = argparse.ArgumentParser()
-parser.add_argument('--video', type=str, default='mug',
-                    help='video file name')  # sunglass or mug
+parser.add_argument('--video', type=str, default='mug', help='video file name')  # sunglass or mug
 parser.add_argument('--size', type=str, default=299, help='size of frame')
 parser.add_argument('--env', type=str, default='pc', help='environment')
 args = parser.parse_args()

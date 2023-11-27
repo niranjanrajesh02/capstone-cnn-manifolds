@@ -27,7 +27,6 @@ def get_flattened_imgs(img_size=299, env='pc'):
       class_len = len(os.listdir(class_path))
       # class_images[class_i] = np.zeros((class_len, img_size*img_size))
       class_images[class_i] = np.zeros((class_len, n_dim))
-
       # store an np array of all the flattened images in the class
       for i, img in enumerate(os.listdir(class_path)):
           img_path = os.path.join(class_path, img)
