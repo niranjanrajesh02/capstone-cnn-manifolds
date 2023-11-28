@@ -35,10 +35,10 @@ def iterateImgs(img_path, model, preproc, layer_name):
 def getRepresentations(model_name, layer_ind, env='pc'):
   if env == 'hpc':
     img_path = "/home/niranjan.rajesh_asp24/capstone-cnn-manifolds/vid2img/frames/"
-    weights_path = f"/home/niranjan.rajesh_asp24/capstone-cnn-manifolds/cnns/{model_name}_imagenet_weights.h5"
+    weights_path = f"/home/niranjan.rajesh_asp24/capstone-cnn-manifolds/cnns/weights/{model_name}_imagenet_weights.h5"
   elif env == 'pc':
     img_path = "../vid2img/frames/"
-    weights_path = f"../cnns/{model_name}_imagenet_weights.h5"
+    weights_path = f"../cnns/weights/{model_name}_imagenet_weights.h5"
 
   if model_name == 'xception':
     from keras.applications.xception import Xception, preprocess_input, decode_predictions
