@@ -1,5 +1,6 @@
 import numpy as np
 import pandas as pd
+import gc
 # creates X and Y for linear model training from a dictionary of form {label: [x1, x2, ...], label2: [x'1, x'2, ...]}
 def load_data_from_dict(data):
     X = []
@@ -9,7 +10,8 @@ def load_data_from_dict(data):
         for x in x_list:
             X.append(x)  
             Y.append(y)
-    
+    del data
+    gc.collect()
     return np.array(X, dtype=int), np.array(Y)
 
 def write_model_layernames(model_name, root_path):
@@ -18,6 +20,7 @@ def write_model_layernames(model_name, root_path):
         model = Xception(weights='imagenet')
         layer_names = [layer.name for layer in model.layers if layer.name.endswith('act')]
         del model
+        gc.collect()
         # save layer names to csv file
         np.savetxt(f"{root_path}manifolds/xception_layer_names.csv", layer_names, delimiter=",", fmt='%s')
 

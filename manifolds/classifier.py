@@ -8,12 +8,14 @@ import cv2
 from mani_utils import load_data_from_dict
 import argparse 
 from representation_space import getRepresentations
+import gc
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--space', type=str, default='pixel', help='Space you want to classify')  
 parser.add_argument('--env', type=str, default='pc', help='environment')
 parser.add_argument('--layer', type=int, default=0, help='layer number', required=False)
 parser.add_argument('--model', type=str, default='xception', help='model name', required=False)
+parser.add_argument('--every_n', type=str, default=1, help='skip every n images', required=False)
 
 args = parser.parse_args()
 
@@ -23,6 +25,7 @@ def classify_pixel_space():
   # create X and Y for linear model training
   X, Y = load_data_from_dict(class_imgs)
   del class_imgs
+  gc.collect()
   # Train linear model
   X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.2, random_state=42)
   model = LogisticRegression()
@@ -31,11 +34,12 @@ def classify_pixel_space():
   print(f"Accuracy: {accuracy_score(Y_test, Y_pred)}")
 
 
-def classify_layer_space(layer_num):
-  class_reps = getRepresentations(model_name=args.model, layer_ind=args.layer, env=args.env )
+def classify_layer_space():
+  class_reps = getRepresentations(model_name=args.model, layer_ind=args.layer, env=args.env, every_n=args.every_n)
   # create X and Y for linear model training
   X, Y = load_data_from_dict(class_reps)
   del class_reps
+  gc.collect()
   # Train linear model
   X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.01, random_state=42)
   model = LogisticRegression()
