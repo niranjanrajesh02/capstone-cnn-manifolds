@@ -13,7 +13,7 @@ def iterateImgs(imgdir_path, model, preproc, layer_name, env='pc', every_n_img=1
 
   for class_i in classes:
       class_path = os.path.join(imgdir_path, class_i)
-      class_len = len(os.listdir(class_path)) // every_n_img
+      class_len = len(os.listdir(class_path)) // every_n_img + 1
       layer = model.get_layer(layer_name)
       if env == 'hpc':
         n_dim = layer.output.shape[1] * layer.output.shape[2] * layer.output.shape[3]
@@ -32,6 +32,7 @@ def iterateImgs(imgdir_path, model, preproc, layer_name, env='pc', every_n_img=1
           img = tf.expand_dims(img, axis=0)
           img /= 255
           reps = model.predict(img)
+          print("Predicted for image ", i, " in class ", class_i, " of ", class_len, " images")
           reps = reps.flatten() 
           class_reps[class_i][count] = reps[:n_dim]
           count += 1
@@ -67,4 +68,4 @@ def getRepresentations(model_name, layer_ind, env='pc', every_n=1):
     return reps_dict
 
 
-# getRepresentations(model_name='xception', layer_ind=0, env='pc')
+# getRepresentations(model_name='xception', layer_ind=0, env='pc', every_n=100)

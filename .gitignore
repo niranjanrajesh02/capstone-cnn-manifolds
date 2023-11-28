@@ -6,3 +6,4 @@ __pycache__
 *.sh
 /Results
 /Logs
+/cnns/weights
