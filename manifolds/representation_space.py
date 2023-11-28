@@ -58,4 +58,4 @@ def getRepresentations(model_name, layer_ind, env='pc'):
     return reps_dict
 
 
-getRepresentations(model_name='xception', layer_ind=0, env='pc')
+# getRepresentations(model_name='xception', layer_ind=0, env='pc')
