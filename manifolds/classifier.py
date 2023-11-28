@@ -52,4 +52,4 @@ if __name__ == '__main__':
   if args.space == 'pixel':
     classify_pixel_space()
   elif args.space == 'layer':
-    classify_layer_space(0)
+    classify_layer_space()
