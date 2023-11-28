@@ -22,6 +22,7 @@ def iterateImgs(imgdir_path, model, preproc, layer_name, env='pc', every_n_img=1
       print("Representational Space Dimension: ", n_dim)
       class_reps[class_i] = np.zeros((class_len, n_dim), dtype=int)
       # store an np array of all the flattened images in the class
+      count = 0
       for i, img in enumerate(os.listdir(class_path)):
           if i % every_n_img != 0:
             continue
@@ -32,7 +33,8 @@ def iterateImgs(imgdir_path, model, preproc, layer_name, env='pc', every_n_img=1
           img /= 255
           reps = model.predict(img)
           reps = reps.flatten() 
-          class_reps[class_i][i] = reps[:n_dim]
+          class_reps[class_i][count] = reps[:n_dim]
+          count += 1
       print(f"Got representations for class {class_i}")    
   return class_reps
 
