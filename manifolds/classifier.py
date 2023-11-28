@@ -32,7 +32,7 @@ def classify_pixel_space():
 
 
 def classify_layer_space(layer_num):
-  class_reps = getRepresentations(args.model, args.env, args.layer)
+  class_reps = getRepresentations(model_name=args.model, layer_ind=args.layer, env=args.env )
   # create X and Y for linear model training
   X, Y = load_data_from_dict(class_reps)
   del class_reps
