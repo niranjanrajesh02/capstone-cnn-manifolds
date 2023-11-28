@@ -7,6 +7,7 @@ from sklearn.metrics import accuracy_score
 import cv2
 from mani_utils import load_data_from_dict
 import argparse 
+from representation_space import getRepresentations
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--space', type=str, default='pixel', help='Space you want to classify')  
@@ -31,6 +32,16 @@ def classify_pixel_space():
 
 
 def classify_layer_space(layer_num):
+  class_reps = getRepresentations(args.model, args.env, args.layer)
+  # create X and Y for linear model training
+  X, Y = load_data_from_dict(class_reps)
+  del class_reps
+  # Train linear model
+  X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.01, random_state=42)
+  model = LogisticRegression()
+  model.fit(X_train, Y_train)
+  Y_pred = model.predict(X_train)
+  print(f"Accuracy: {accuracy_score(Y_train, Y_pred)}")
   return
 
 if __name__ == '__main__':

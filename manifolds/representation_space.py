@@ -49,9 +49,10 @@ def getRepresentations(model_name, layer_ind, env='pc'):
     layers_df = load_model_layernames('xception', root_path)
     layer_name = layers_df.iloc[layer_ind]['layer_name']
     model = tf.keras.Model(inputs=model.input, outputs=model.get_layer(layer_name).output)
+    print("Model loaded successfully")
+    print("Getting activations ...")
     reps_dict = iterateImgs(img_path=img_path, model=model, preproc=preprocess_input, layer_name=layer_name)
-    print(reps_dict)
-    print(reps_dict['mug'][0].shape)
+    return reps_dict
 
 
 getRepresentations(model_name='xception', layer_ind=0, env='hpc')
