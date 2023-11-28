@@ -15,7 +15,7 @@ parser.add_argument('--space', type=str, default='pixel', help='Space you want t
 parser.add_argument('--env', type=str, default='pc', help='environment')
 parser.add_argument('--layer', type=int, default=0, help='layer number', required=False)
 parser.add_argument('--model', type=str, default='xception', help='model name', required=False)
-parser.add_argument('--every_n', type=str, default=1, help='skip every n images', required=False)
+parser.add_argument('--every_n', type=int, default=1, help='skip every n images', required=False)
 
 args = parser.parse_args()
 
