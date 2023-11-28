@@ -6,15 +6,18 @@ import cv2
 import numpy as np
 # function that returns the activations of a specific layer given an imagenet pretrained model when passed an image
 
-def iterateImgs(img_path, model, preproc, layer_name):
-  classes = os.listdir(img_path)
+def iterateImgs(imgdir_path, model, preproc, layer_name, env='pc'):
+  classes = os.listdir(imgdir_path)
   class_reps = {}
 
   for class_i in classes:
-      class_path = os.path.join(img_path, class_i)
+      class_path = os.path.join(imgdir_path, class_i)
       class_len = len(os.listdir(class_path))
       layer = model.get_layer(layer_name)
-      n_dim = layer.output.shape[1] * layer.output.shape[2] * layer.output.shape[3]
+      if env == 'hpc':
+        n_dim = layer.output.shape[1] * layer.output.shape[2] * layer.output.shape[3]
+      else:
+        n_dim = 100
       print("Representational Space Dimension: ", n_dim)
       class_reps[class_i] = np.zeros((class_len, n_dim))
       # store an np array of all the flattened images in the class
@@ -26,9 +29,9 @@ def iterateImgs(img_path, model, preproc, layer_name):
           img = preproc(img)
           reps = model.predict(img)
           reps = reps.flatten()
-          class_reps[class_i][i] = reps
-      
-      return class_reps
+          class_reps[class_i][i] = reps[:100]
+      print(f"Got representations for class {class_i}")    
+  return class_reps
 
 
 
@@ -51,8 +54,8 @@ def getRepresentations(model_name, layer_ind, env='pc'):
     model = tf.keras.Model(inputs=model.input, outputs=model.get_layer(layer_name).output)
     print("Model loaded successfully")
     print("Getting activations ...")
-    reps_dict = iterateImgs(img_path=img_path, model=model, preproc=preprocess_input, layer_name=layer_name)
+    reps_dict = iterateImgs(imgdir_path=img_path, model=model, preproc=preprocess_input, layer_name=layer_name , env=env)
     return reps_dict
 
 
-getRepresentations(model_name='xception', layer_ind=0, env='hpc')
+getRepresentations(model_name='xception', layer_ind=0, env='pc')
