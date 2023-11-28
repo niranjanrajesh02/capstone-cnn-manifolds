@@ -20,7 +20,7 @@ def iterateImgs(img_path, model, preproc, layer_name):
       # store an np array of all the flattened images in the class
       for i, img in enumerate(os.listdir(class_path)):
           img_path = os.path.join(class_path, img)
-          img = cv2.imread(img_path)
+          img = cv2.imread(img_path).astype('float32')
           # predict the image
           img = tf.expand_dims(img, axis=0)
           img = preproc(img)
