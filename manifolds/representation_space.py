@@ -23,10 +23,10 @@ def iterateImgs(imgdir_path, model, preproc, layer_name, env='pc'):
       # store an np array of all the flattened images in the class
       for i, img in enumerate(os.listdir(class_path)):
           img_path = os.path.join(class_path, img)
-          img = cv2.imread(img_path).astype('float32')
+          img = cv2.imread(img_path)
           # predict the image
           img = tf.expand_dims(img, axis=0)
-          img = preproc(img)
+          img /= 255
           reps = model.predict(img)
           reps = reps.flatten() 
           class_reps[class_i][i] = reps[:n_dim]
