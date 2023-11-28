@@ -51,4 +51,4 @@ def getRepresentations(model_name, layer_ind, env='pc'):
     print(reps_dict['mug'][0].shape)
 
 
-getRepresentations(model_name='xception', layer_ind=0, env='pc')
+getRepresentations(model_name='xception', layer_ind=0, env='hpc')
