@@ -28,8 +28,8 @@ def iterateImgs(imgdir_path, model, preproc, layer_name, env='pc'):
           img = tf.expand_dims(img, axis=0)
           img = preproc(img)
           reps = model.predict(img)
-          reps = reps.flatten()
-          class_reps[class_i][i] = reps[:100]
+          reps = reps.flatten() 
+          class_reps[class_i][i] = reps[:n_dim]
       print(f"Got representations for class {class_i}")    
   return class_reps
 
