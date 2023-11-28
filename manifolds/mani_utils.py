@@ -10,7 +10,7 @@ def load_data_from_dict(data):
             X.append(x)  
             Y.append(y)
     
-    return np.array(X), np.array(Y)
+    return np.array(X, dtype=int), np.array(Y)
 
 def write_model_layernames(model_name, root_path):
     if model_name == 'xception':
