@@ -35,17 +35,18 @@ def iterateImgs(img_path, model, preproc, layer_name):
 def getRepresentations(model_name, layer_ind, env='pc'):
   if env == 'hpc':
     img_path = "/home/niranjan.rajesh_asp24/capstone-cnn-manifolds/vid2img/frames/"
+    weights_path = f"/home/niranjan.rajesh_asp24/capstone-cnn-manifolds/cnns/{model_name}_imagenet_weights.h5"
   elif env == 'pc':
     img_path = "../vid2img/frames/"
+    weights_path = f"../cnns/{model_name}_imagenet_weights.h5"
 
   if model_name == 'xception':
     from keras.applications.xception import Xception, preprocess_input, decode_predictions
-    model = Xception(weights='imagenet')
-    print(model.summary())
+    model = Xception(weights=None)
+    model.load_weights(weights_path)
     layers_df = load_model_layernames('xception')
     layer_name = layers_df.iloc[layer_ind]['layer_name']
     model = tf.keras.Model(inputs=model.input, outputs=model.get_layer(layer_name).output)
-
     reps_dict = iterateImgs(img_path=img_path, model=model, preproc=preprocess_input, layer_name=layer_name)
     print(reps_dict)
     print(reps_dict['mug'][0].shape)

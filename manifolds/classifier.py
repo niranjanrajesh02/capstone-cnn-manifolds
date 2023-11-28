@@ -9,16 +9,16 @@ from mani_utils import load_data_from_dict
 import argparse 
 
 parser = argparse.ArgumentParser()
-parser.add_argument('--space', type=str, default='pixel', help='Space you want to classify')  # sunglass or mug
+parser.add_argument('--space', type=str, default='pixel', help='Space you want to classify')  
 parser.add_argument('--env', type=str, default='pc', help='environment')
+parser.add_argument('--layer', type=int, default=0, help='layer number', required=False)
+parser.add_argument('--model', type=str, default='xception', help='model name', required=False)
+
 args = parser.parse_args()
 
 
 def classify_pixel_space():
   class_imgs = get_flattened_imgs(env=args.env)
-
-
-
   # create X and Y for linear model training
   X, Y = load_data_from_dict(class_imgs)
   del class_imgs
@@ -30,9 +30,11 @@ def classify_pixel_space():
   print(f"Accuracy: {accuracy_score(Y_test, Y_pred)}")
 
 
-  # create a dataframe of the classes
-
+def classify_layer_space(layer_num):
   return
 
-
-classify_pixel_space()
+if __name__ == '__main__':
+  if args.space == 'pixel':
+    classify_pixel_space()
+  elif args.space == 'layer':
+    classify_layer_space(0)
