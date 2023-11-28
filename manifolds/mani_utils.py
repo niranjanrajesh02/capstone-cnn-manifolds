@@ -12,17 +12,17 @@ def load_data_from_dict(data):
     
     return np.array(X), np.array(Y)
 
-def write_model_layernames(model_name):
+def write_model_layernames(model_name, root_path):
     if model_name == 'xception':
         from keras.applications.xception import Xception, preprocess_input, decode_predictions
         model = Xception(weights='imagenet')
         layer_names = [layer.name for layer in model.layers if layer.name.endswith('act')]
         del model
         # save layer names to csv file
-        np.savetxt("./xception_layer_names.csv", layer_names, delimiter=",", fmt='%s')
+        np.savetxt(f"{root_path}manifolds/xception_layer_names.csv", layer_names, delimiter=",", fmt='%s')
 
-def load_model_layernames(model_name):
+def load_model_layernames(model_name, root_path):
     if model_name == 'xception':
         # load layer names from csv file as dataframe with index
-        layer_names = pd.read_csv('./xception_layer_names.csv', header=None, names=['layer_name'])
+        layer_names = pd.read_csv(f'{root_path}manifolds/xception_layer_names.csv', header=None, names=['layer_name'])
         return layer_names
