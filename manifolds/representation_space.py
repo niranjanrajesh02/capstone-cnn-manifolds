@@ -19,11 +19,11 @@ def iterateImgs(imgdir_path, model, preproc, layer_name, env='pc'):
       else:
         n_dim = 100
       print("Representational Space Dimension: ", n_dim)
-      class_reps[class_i] = np.zeros((class_len, n_dim))
+      class_reps[class_i] = np.zeros((class_len, n_dim), dtype=int)
       # store an np array of all the flattened images in the class
       for i, img in enumerate(os.listdir(class_path)):
           img_path = os.path.join(class_path, img)
-          img = cv2.imread(img_path)
+          img = cv2.imread(img_path).astype('int')
           # predict the image
           img = tf.expand_dims(img, axis=0)
           img /= 255
@@ -51,10 +51,12 @@ def getRepresentations(model_name, layer_ind, env='pc'):
     model.load_weights(weights_path)
     layers_df = load_model_layernames('xception', root_path)
     layer_name = layers_df.iloc[layer_ind]['layer_name']
+    del layers_df
     model = tf.keras.Model(inputs=model.input, outputs=model.get_layer(layer_name).output)
     print("Model loaded successfully")
     print("Getting activations ...")
     reps_dict = iterateImgs(imgdir_path=img_path, model=model, preproc=preprocess_input, layer_name=layer_name , env=env)
+    del model
     return reps_dict
 
 
