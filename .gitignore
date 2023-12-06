@@ -6,4 +6,5 @@ __pycache__
 *.sh
 /Results
 /Logs
-/cnns/weights
+
+/cnn_utils/weights/
