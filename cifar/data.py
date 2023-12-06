@@ -45,7 +45,7 @@ def get_data(env):
       validation_split=None,
       subset=None)
     valid_ds = tf.keras.preprocessing.image_dataset_from_directory(
-      data_path+'/valid',
+      data_path+'/test',
       labels='inferred',
       label_mode='categorical',
       class_names=None,
