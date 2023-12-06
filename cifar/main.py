@@ -32,9 +32,13 @@ else:
 
 # save history as csv with df
 df = pd.DataFrame(history.history)
-df.to_csv('./history.csv')
 
-# save model
-cnn_model.save('./trained_cifar10_model.h5')
+if args.env == 'pc':
+  df.to_csv('./cifar_mobnet_history.csv')
+  cnn_model.save('trained_cifar_mobnet.h5')
+else:
+  store_path = '/home/niranjan.rajesh_asp24/capstone-cnn-manifolds/Results'
+  df.to_csv(store_path+'cifar_mobnet_history.csv')
+  cnn_model.save(store_path+'trained_cifar10_model.h5')
 
 
