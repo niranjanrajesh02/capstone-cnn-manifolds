@@ -5,7 +5,7 @@ import numpy as np
 cnn = tf.keras.applications.MobileNetV2(input_shape=(32,32,3), weights=None, classes=10)
 cnn.load_weights('./weights/trained_cifar10_mobnet.h5')
 print("Loaded Weights")
-
+print(cnn.summary())
 
 layer_names = {
   'Conv1': 1,
