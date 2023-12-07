@@ -19,7 +19,6 @@ cnn_model = build_model(num_classes=10)
 cnn_model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accuracy'])
 
 
-
 # early stop
 early_stop = EarlyStopping(monitor='val_accuracy', patience=10, verbose=1)
 
@@ -28,14 +27,14 @@ early_stop = EarlyStopping(monitor='val_accuracy', patience=10, verbose=1)
 if args.env == 'pc':
   history = cnn_model.fit(train_ds[0], train_ds[1], epochs=1, batch_size=64, validation_data=(test_ds[0], test_ds[1]), callbacks=[early_stop])
 else:
-  history = cnn_model.fit(train_ds, epochs=1, batch_size=64, validation_data=test_ds, callbacks=[early_stop])
+  history = cnn_model.fit(train_ds, epochs=100, batch_size=64, validation_data=test_ds, callbacks=[early_stop])
 
 # save history as csv with df
 df = pd.DataFrame(history.history)
 
 if args.env == 'pc':
   df.to_csv('./cifar_mobnet_history.csv')
-  cnn_model.save('trained_cifar_mobnet.h5')
+  cnn_model.save('./trained_cifar_mobnet.h5')
 else:
   store_path = '/home/niranjan.rajesh_asp24/capstone-cnn-manifolds/Results'
   df.to_csv(store_path+'cifar_mobnet_history.csv')
